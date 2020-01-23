@@ -4,7 +4,8 @@ module.exports = {
   mode: 'development',
   entry: {
     main: './src/index.ts',
-    worker: './src/Workers/OffScreenWorker.ts'
+    // worker: './src/Workers/OffScreenWorker.ts'
+    worker: './src/Workers/OffScreenStl.ts'
   },
   output: {
     path: `${__dirname}/dist`

@@ -25,12 +25,7 @@ class WorkerMain {
     this.renderer.setSize(offscreenCanvas.width, offscreenCanvas.height);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      45,
-      offscreenCanvas.width / offscreenCanvas.height,
-      1,
-      10000
-    );
+    this.camera = new THREE.PerspectiveCamera(45, offscreenCanvas.width / offscreenCanvas.height, 1, 10000);
     this.camera.position.set(0, 0, 50);
     this.camera.lookAt(0, 0, 0);
     const geometry = new THREE.BoxGeometry(10, 10, 10, 1, 1, 1);
