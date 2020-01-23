@@ -18,7 +18,7 @@ export default class CsgFirst {
     document.body.appendChild(this.renderer.domElement);
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
-    this.camera.position.set(0, 0, 5);
+    this.camera.position.set(0, 2, 5);
 
     this.scene = new THREE.Scene();
 
@@ -36,6 +36,12 @@ export default class CsgFirst {
   }
 
   createMesh() {
+    // const material = new THREE.MeshBasicMaterial({
+    //   color: 0xff0000,
+    //   wireframe: true
+    // });
+    // const meshA = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+    // const meshB = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
     const meshA = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1));
     const meshB = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1));
 
