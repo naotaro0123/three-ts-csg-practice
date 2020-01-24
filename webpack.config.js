@@ -34,7 +34,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, './src'),
     watchContentBase: true,
-    port: 4000,
+    port: 5000,
     open: true,
     openPage: './index.html'
   }

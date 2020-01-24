@@ -1,56 +1,52 @@
 import * as THREE from 'three';
 import { CSG } from '@hi-level/three-csg';
-// import ProceduralTexture from '../Components/ProceduralTexture';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+import ProceduralTexture from './ProceduralTexture';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import insideWorker from 'offscreen-canvas/inside-worker';
 
 let timer = 0;
 // const MODEL_PATH = '../models/benz.stl';
+// const MODEL_PATH = '../models/suzannnu.stl';
 const MODEL_PATH = '../models/box.stl';
-
-let workerMain: WorkerMain;
-insideWorker(event => {
-  if (event.data.canvas) {
-    workerMain = new WorkerMain(event.data.canvas);
-  } else if (event.data.type === 'resize') {
-    workerMain.resize(event.data.width, event.data.height);
-  }
-});
 
 // 'union' => 結合：青
 // 'intersect' => 交差：緑
 // 'subtract' => 減産：赤
-class WorkerMain {
+export default class CsgThird {
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
+  private controller: TrackballControls;
   private scene: THREE.Scene;
   private results: THREE.Mesh[] = [];
   private box: THREE.Mesh;
   private sphere: THREE.Mesh;
-  // private proceduralTexture: ProceduralTexture;
+  private proceduralTexture: ProceduralTexture;
   private subMaterial: THREE.MeshStandardMaterial;
   private intersectMaterial: THREE.MeshStandardMaterial;
   private unionMaterial: THREE.MeshStandardMaterial;
   private modelMesh: THREE.Mesh;
 
-  constructor(offscreenCanvas) {
-    const width = offscreenCanvas.width;
-    const height = offscreenCanvas.height;
+  constructor() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-    offscreenCanvas.style = { width: 0, height: 0 };
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: offscreenCanvas
-    });
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(width, height);
-    // this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    document.body.appendChild(this.renderer.domElement);
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
     this.camera.position.set(10, 10, 10);
-    this.camera.lookAt(0, 0, 0);
+
     this.scene = new THREE.Scene();
 
+    this.controller = new TrackballControls(this.camera, this.renderer.domElement);
+    this.controller.noPan = true;
+    this.controller.rotateSpeed = 5;
+    this.controller.minDistance = 0;
+    this.controller.maxDistance = 1000;
 
-    // this.proceduralTexture = new ProceduralTexture();
+    this.proceduralTexture = new ProceduralTexture();
 
     this.sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 8, 8), this.makeMaterial('grey'));
     this.scene.add(this.sphere);
@@ -75,27 +71,25 @@ class WorkerMain {
       this.modelMesh = new THREE.Mesh(geometry, material);
       const scaleSize = 1.0;
       this.modelMesh.scale.x = this.modelMesh.scale.y = this.modelMesh.scale.z = scaleSize;
-      this.scene.add(this.modelMesh);
+      // this.scene.add(this.modelMesh);
 
       // this.box = this.modelMesh;
       this.box = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), this.makeMaterial('grey'));
       // this.modelMesh.copy(this.box);
       this.scene.add(this.box);
+
       // this.renderer.setAnimationLoop(() => this.render());
       this.render();
     });
   }
 
   makeMaterial(color: string) {
-    // const loader = new THREE.TextureLoader();
-    // const texture = loader.load('../images/Ee9uPcKx.jpeg');
     return new THREE.MeshStandardMaterial({
       color: color,
       roughness: 1,
       metalness: 0.8,
-      // map: texture
-      // map: this.proceduralTexture.texture
-      wireframe: true
+      map: this.proceduralTexture.texture
+      // wireframe: true
     });
   }
 
@@ -149,13 +143,8 @@ class WorkerMain {
     this.sphere.position.z = Math.cos(timer * 0.0011) * 0.5;
     this.sphere.position.y = Math.sin(timer * -0.0012) * 0.5;
 
+    this.controller.update();
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(() => this.render());
-  }
-
-  resize(width: number, height: number) {
-    this.renderer.setSize(width, height);
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
   }
 }

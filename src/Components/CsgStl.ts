@@ -5,6 +5,7 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 
 // const MODEL_PATH = '../models/suzannnu.stl';
 const MODEL_PATH = '../models/furniture.stl';
+// const MODEL_PATH = '../models/benz.stl';
 
 export default class CsgStl {
   private renderer: THREE.WebGLRenderer;
@@ -26,6 +27,7 @@ export default class CsgStl {
     this.camera.position.set(0, 2, 5);
 
     this.scene = new THREE.Scene();
+
     const gridHelper = new THREE.GridHelper(200, 50);
     this.scene.add(gridHelper);
 
@@ -53,6 +55,7 @@ export default class CsgStl {
       });
       this.modelMesh = new THREE.Mesh(geometry, material);
       this.modelMesh.position.add(new THREE.Vector3(0.0, 0.0, -2.0));
+      // TODO: コメント
       // this.scene.add(this.modelMesh);
 
       this.createMesh();
@@ -86,6 +89,7 @@ export default class CsgStl {
     // });
     // meshResult.material = meshMaterial;
     meshResult.material = meshA.material;
+    // TODO: コメントアウト
     this.scene.add(meshResult);
   }
 
