@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@hi-level/three-csg": "^1.0.6",
     "@typescript-eslint/parser": "^2.9.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",

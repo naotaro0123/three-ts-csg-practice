@@ -44,11 +44,7 @@ export default function FirstStep() {
       const geometry = new THREE.Geometry();
       for (let i = 0; i < 1000; i++) {
         geometry.vertices.push(
-          new THREE.Vector3(
-            3000 * (Math.random() - 0.5),
-            3000 * (Math.random() - 0.5),
-            3000 * (Math.random() - 0.5)
-          )
+          new THREE.Vector3(3000 * (Math.random() - 0.5), 3000 * (Math.random() - 0.5), 3000 * (Math.random() - 0.5))
         );
         const material = new THREE.PointsMaterial({
           size: 10,

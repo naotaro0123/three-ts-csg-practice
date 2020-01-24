@@ -4,7 +4,8 @@ module.exports = {
   mode: 'development',
   entry: {
     main: './src/index.ts',
-    worker: './src/Workers/OffScreenWorker.ts'
+    // worker: './src/Workers/OffScreenWorker.ts'
+    worker: './src/Workers/OffScreenStl.ts'
   },
   output: {
     path: `${__dirname}/dist`
@@ -33,7 +34,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, './src'),
     watchContentBase: true,
-    port: 4000,
+    port: 5000,
     open: true,
     openPage: './index.html'
   }

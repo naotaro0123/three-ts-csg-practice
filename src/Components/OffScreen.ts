@@ -9,9 +9,7 @@ class OffScreen {
 
     const webworkerLink = '<link rel="preload" as="script" href="worker.js">';
     document.head.innerHTML += webworkerLink;
-    const workerUrl = (<HTMLLinkElement>(
-      document.querySelector('[rel=preload][as=script]')
-    )).href;
+    const workerUrl = (<HTMLLinkElement>document.querySelector('[rel=preload][as=script]')).href;
     const worker = createWorker(canvas, workerUrl);
     window.addEventListener('resize', () => {
       worker.post({
