@@ -32,6 +32,6 @@
     "@types/gsap": "^1.20.2",
     "@types/stats": "^0.16.30",
     "@types/webgl2": "0.0.5",
-    "three": "^0.111.0"
+    "three": "^0.137.0"
   }
 }
